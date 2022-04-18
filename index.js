@@ -14,11 +14,9 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { PORT = 3001 } = process.env;
 const app = express();
 
-mongoose.connect('mongodb+srv://IvanPlisyakov:actiVision12@cluster-mesto.ndo6c.mongodb.net/movies?retryWrites=true&w=majority', {
+mongoose.connect('mongodb://localhost:27017/barbershop', {//'mongodb://localhost:27017' //'mongodb+srv://IvanPlisyakov:actiVision12@cluster-mesto.ndo6c.mongodb.net/movies?retryWrites=true&w=majority'
   useUnifiedTopology: true,
   useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
 })
   .then(() => console.log('mongo connected'))
   .catch((err) => {console.log(err)});
@@ -28,7 +26,7 @@ app.use(helmet());
 app.use(requestLogger);
 app.use(limiter);
 app.use(bodyParser.json());
-app.use('/', routers);
+app.use('/api', routers);
 app.use(() => {
   throw new NotFoundError('Запрашиваемый ресурс не найден');
 });
@@ -39,3 +37,4 @@ app.use(centarlErrors);
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
+

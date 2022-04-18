@@ -6,6 +6,7 @@ const {
 const { auth } = require('../middlewares/auth.js');
 const routerMovies = require('./movies.js');
 const routerUsers = require('./users.js');
+const routerSubscribes = require('./subscribes.js');
 
 router.post('/signup', celebrate({
   body: Joi.object().keys({
@@ -22,6 +23,7 @@ router.post('/signin', celebrate({
 }), login);
 router.use('/movies', auth, routerMovies);
 router.use('/users', auth, routerUsers);
+router.use('/subscribes', auth, routerSubscribes);
 router.use(/\//, auth);
 
 module.exports = router;
