@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
     minlength: 2,
     maxlength: 30,
   },
+  ban: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 userSchema.statics.findUserByCredentials = function encryptPassword(email, password) {

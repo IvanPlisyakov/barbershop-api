@@ -76,6 +76,15 @@ const changeUser = (req, res, next) => {
     .catch(next);
 };
 
+const blockUser = (req, res, next) => {
+  User.findByIdAndUpdate(    
+    req.user._id,
+    { ban: true },
+    {new: true, useFindAndModify: false})
+    .then((users) => { res.status(200).send(users); })
+    .catch(next);
+};
+
 module.exports = {
-  createUsers, login, getUsers, getUser, changeUser,
+  createUsers, login, getUsers, getUser, changeUser, blockUser
 };
