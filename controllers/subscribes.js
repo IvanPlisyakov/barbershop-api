@@ -4,9 +4,20 @@ const CommonError = require('../errors/common-err');
 
 const getSubscribe = (req, res, next) => {
   Subscribe.find({ owner: req.user._id })
-    .then((subscribe) => { res.status(200).send(subscribe); })
+    .then((subscribe) => { 
+      
+      res.status(200).send(subscribe); 
+    })
     .catch(next);
 };
+
+const getAllSubscribes = (req, res, next) => {
+  Subscribe.find({})
+    .then((subscribes) => {
+      res.status(200).send(subscribes)
+    })
+    .catch(next);
+}
 
 const createSubscribe = (req, res, next) => {
   console.log("yes")
@@ -35,6 +46,25 @@ const createSubscribe = (req, res, next) => {
     .catch(next);
 };
 
+const changeSubscribe = (req, res, next) => {
+  const {
+    date, time, service, master
+  } = req.body;
+  Subscribe.findOneAndUpdate(
+    { _id: req.params.id }, 
+    {date, time, service, master},
+    { new: true, runValidators: true },
+  )
+    .then((subscribe) => {
+      if (!subscribe) {
+        throw new NotFoundError('Data about the subscribe information was not received');
+      }
+
+      res.status(200).send(subscribe);
+    })
+    .catch(next);
+}
+
 const deleteMovie = (req, res, next) => {
   Movie.findById(req.params.movieId)
     .then((movie) => {
@@ -54,5 +84,5 @@ const deleteMovie = (req, res, next) => {
 };
 
 module.exports = {
-  getSubscribe, createSubscribe, deleteMovie,
+  getSubscribe, createSubscribe, deleteMovie, getAllSubscribes, changeSubscribe
 };

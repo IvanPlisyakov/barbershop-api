@@ -17,6 +17,7 @@ const app = express();
 mongoose.connect('mongodb://localhost:27017/barbershop', {//'mongodb://localhost:27017' //'mongodb+srv://IvanPlisyakov:actiVision12@cluster-mesto.ndo6c.mongodb.net/movies?retryWrites=true&w=majority'
   useUnifiedTopology: true,
   useNewUrlParser: true,
+  useFindAndModify: false,
 })
   .then(() => console.log('mongo connected'))
   .catch((err) => {console.log(err)});

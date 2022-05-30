@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
 const {
-  getSubscribe, createSubscribe, deleteMovie,
+  getSubscribe, createSubscribe, deleteMovie, getAllSubscribes, changeSubscribe
 } = require('../controllers/subscribes');
 
+router.get('/all', getAllSubscribes);
 router.get('/', getSubscribe);
 router.post('/', celebrate({
   body: Joi.object().keys({
@@ -13,6 +14,8 @@ router.post('/', celebrate({
     master: Joi.string().required(),
   }).unknown(true),
 }), createSubscribe);
+
+router.patch('/:id', changeSubscribe)
 
 router.delete('/:movieId', celebrate({
   params: Joi.object().keys({

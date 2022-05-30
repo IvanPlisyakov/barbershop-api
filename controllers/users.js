@@ -27,6 +27,7 @@ const createUsers = (req, res, next) => {
           .then((hash) => User.create({
             name: req.body.name,
             email: req.body.email,
+            phone: req.body.phone,
             password: hash, // записываем хеш в базу
           }))
           .then((readyUser) => {

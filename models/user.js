@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
     minlength: 2,
     maxlength: 30,
   },
+  phone: {
+    type: String,
+    required: true,
+  },
   ban: {
     type: Boolean,
     default: false,
